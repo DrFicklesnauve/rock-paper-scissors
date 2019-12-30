@@ -1,55 +1,116 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <style>
+            html {
+                font-family: sans-serif;
+            }
+            div {
+               box-sizing: border-box;
+               text-align: center;
+            }
+            h1, h2 {
+                text-align: center;
+            }
+            #left, #right {
+                width: 50%;
+                height: 300px;
+            }
+            #left {
+                float: left;
+                border-right: 1px solid gray;
+            }
+            #right {
+                float: right;
+            }
+            button {
+                text-align: center;
+                margin-top: 30px;  
+            }
+            #player-win, #comp-win {
+                color: green;
+            }
+        </style>
     </head>
     <body>
+        <div id="left" class="scores">
+            <h1>Your Score: </h1>
+            <h2 id="player-score">0</h2>
+            <h2 id="player-win"></h2>
+        </div>
+        <div id="right" class="scores">
+            <h1>Computer Score: </h1>
+            <h2 id="computer-score">0</h2>
+            <h2 id="comp-win"></h2>
+        </div>
 
-        <button>Play Game</button>
+        <div>
+            <button id="play">Play Game</button>
+        </div>
 
         <script>
-            var shoots = ["Rock", "Paper", "Scissors"];
-            var playerChoice, computerChoice, choice;
+            var playerScore = 0;
+            var computerScore = 0;
 
-            function computerPlay() {
-                return Math.floor(Math.random() * 3);
+            const game = function() {
+                const shoots = ["Rock", "Paper", "Scissors"];
+                var playerChoice, computerChoice;
+
+                playerChoice = prompt('Rock, Paper, or Scissors');
+                computerChoice = Math.floor(Math.random() * 3);
+
+                if (playerChoice.toLowerCase() != 'rock' && playerChoice.toLowerCase() != 'paper' && playerChoice.toLowerCase() != 'scissors') {
+                    alert('Please make sure you\'ve spelled your option correctly.');
+                } else {
+                    compareChoices(playerChoice, computerChoice, shoots);
+                }
             }
 
-            function compareChoices() {
+            const compareChoices = function(playerChoice, computerChoice, shoots) {
                 var playerWin = "You chose: " + playerChoice + " and the computer chose: " + shoots[computerChoice]
                     + "\nYou win!";
                 var computerWin = "You chose: " + playerChoice + " and the computer chose: " + shoots[computerChoice]
                     + "\nYou lose!";
-
-                console.log(shoots[computerChoice].toLowerCase());
 
                 if (shoots[computerChoice].toLowerCase() == playerChoice.toLowerCase()) {
                     alert("You chose: " + playerChoice + " and the computer chose: " + shoots[computerChoice]
                     + "\nIt's a tie!");
                 } else if (shoots[computerChoice].toLowerCase() == 'rock' && playerChoice.toLowerCase() == 'scissors') {
                     alert(computerWin);
+                    computerScore++;
                 } else if (shoots[computerChoice].toLowerCase() == 'paper' && playerChoice.toLowerCase() == 'rock') {
                     alert(computerWin);
+                    computerScore++;
                 } else if (shoots[computerChoice].toLowerCase() == 'scissors' && playerChoice.toLowerCase() == 'paper') {
                     alert(computerWin);
+                    computerScore++;
                 } else if (shoots[computerChoice].toLowerCase() == 'paper' && playerChoice.toLowerCase() == 'scissors') {
                     alert(playerWin);
+                    playerScore++;
                 } else if (shoots[computerChoice].toLowerCase() == 'scissors' && playerChoice.toLowerCase() == 'rock') {
                     alert(playerWin);
+                    playerScore++;
                 } else if (shoots[computerChoice].toLowerCase() == 'rock' && playerChoice.toLowerCase() == 'paper') {
                     alert(playerWin);
+                    playerScore++;
                 }
+                
+                document.getElementById("player-score").innerHTML = playerScore;
+                document.getElementById("computer-score").innerHTML = computerScore;
+
+                if (document.getElementById("player-score").innerHTML == 5) {
+                    document.getElementById('play').disabled = true;
+                    document.getElementById('player-win').innerHTML = "The Computer Won...";
+                } else if (document.getElementById("computer-score").innerHTML == 5) {
+                    document.getElementById('play').disabled = true;
+                    document.getElementById('comp-win').innerHTML = "The Computer Won...";
+                }
+
             }
 
-            const button = document.querySelector('button');
-            button.onclick = function() {
-                playerChoice = prompt('Rock, Paper, or Scissors');
-                computerChoice = computerPlay();
-
-                if (playerChoice.toLowerCase() != 'rock' && playerChoice.toLowerCase() != 'paper' && playerChoice.toLowerCase() != 'scissors') {
-                    alert('Please make sure you\'ve spelled your option correctly.');
-                } else {
-                    compareChoices();
+            window.onload = function() {
+                document.getElementById("play").onclick = function fun() {
+                    game();
                 }
             }
 
