@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <button>Play Game</button>
+
+        <script>
+            var shoots = ["Rock", "Paper", "Scissors"];
+            var playerChoice, computerChoice, choice;
+
+            function computerPlay() {
+                return Math.floor(Math.random() * 3);
+            }
+
+            function compareChoices() {
+                var playerWin = "You chose: " + playerChoice + " and the computer chose: " + shoots[computerChoice]
+                    + "\nYou win!";
+                var computerWin = "You chose: " + playerChoice + " and the computer chose: " + shoots[computerChoice]
+                    + "\nYou lose!";
+
+                console.log(shoots[computerChoice].toLowerCase());
+
+                if (shoots[computerChoice].toLowerCase() == playerChoice.toLowerCase()) {
+                    alert("You chose: " + playerChoice + " and the computer chose: " + shoots[computerChoice]
+                    + "\nIt's a tie!");
+                } else if (shoots[computerChoice].toLowerCase() == 'rock' && playerChoice.toLowerCase() == 'scissors') {
+                    alert(computerWin);
+                } else if (shoots[computerChoice].toLowerCase() == 'paper' && playerChoice.toLowerCase() == 'rock') {
+                    alert(computerWin);
+                } else if (shoots[computerChoice].toLowerCase() == 'scissors' && playerChoice.toLowerCase() == 'paper') {
+                    alert(computerWin);
+                } else if (shoots[computerChoice].toLowerCase() == 'paper' && playerChoice.toLowerCase() == 'scissors') {
+                    alert(playerWin);
+                } else if (shoots[computerChoice].toLowerCase() == 'scissors' && playerChoice.toLowerCase() == 'rock') {
+                    alert(playerWin);
+                } else if (shoots[computerChoice].toLowerCase() == 'rock' && playerChoice.toLowerCase() == 'paper') {
+                    alert(playerWin);
+                }
+            }
+
+            const button = document.querySelector('button');
+            button.onclick = function() {
+                playerChoice = prompt('Rock, Paper, or Scissors');
+                computerChoice = computerPlay();
+
+                if (playerChoice.toLowerCase() != 'rock' && playerChoice.toLowerCase() != 'paper' && playerChoice.toLowerCase() != 'scissors') {
+                    alert('Please make sure you\'ve spelled your option correctly.');
+                } else {
+                    compareChoices();
+                }
+            }
+
+        </script>
+    </body>
+</html>
